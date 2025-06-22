@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  #board {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .column {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 300px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
