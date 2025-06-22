@@ -17,5 +17,26 @@ body {
     padding: 10px;
     min-height: 300px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+.task-list {
+  min-height: 200px;
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+.task {
+  background: #3498db;
+  color: white;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;
+}
+
+    
   }
   
