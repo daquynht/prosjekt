@@ -11,25 +11,35 @@
   <div id="board">
     <div class="column" id="todo">
       <h2>To Do</h2>
-      <input type="text" class="new-task-input" placeholder="Legg til oppgave...">
-      <button class="add-task-btn">Legg til</button>
+      <input type="text" class="new-task-input" placeholder="New task">
+      <button class="add-task-btn">Add to</button>
       <div class="task-list"></div>
     </div>
     <div class="column" id="inprogress">
       <h2>In Progress</h2>
-      <input type="text" class="new-task-input" placeholder="Legg til oppgave...">
-      <button class="add-task-btn">Legg til</button>
+      <input type="text" class="new-task-input" placeholder="New task">
+      <button class="add-task-btn">Add to</button>
       <div class="task-list"></div>
     </div>
     <div class="column" id="done">
       <h2>Done</h2>
-      <input type="text" class="new-task-input" placeholder="Legg til oppgave...">
-      <button class="add-task-btn">Legg til</button>
+      <input type="text" class="new-task-input" placeholder="New task">
+      <button class="add-task-btn">Add to</button>
       <div class="task-list"></div>
     </div>
+  </div>
+
+  <!-- Redigerings-popup -->
+  <div id="edit-popup" class="popup hidden">
+    <h3>Edit task</h3>
+    <label>Description:</label>
+    <textarea id="edit-desc"></textarea>
+    <label>Tag:</label>
+    <input type="text" id="edit-tag" />
+    <button id="save-edit-btn">Save</button>
+    <button onclick="closeEditPopup()">Cancel</button>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
