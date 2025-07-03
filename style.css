@@ -65,6 +65,26 @@ body {
   color: #ffffff;
 }
 
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 5px;
+  color: white;
+}
+
+.task-actions button:hover {
+  color: #ccc;
+}
+
+
 /* Popup for redigering */
 .popup {
   position: fixed;
@@ -101,4 +121,23 @@ body {
 
 .delete-btn:hover svg {
   fill: #e74c3c;
+}
+
+.left-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  padding: 0;
+}
+
+.edit-btn:hover {
+  color: #ccc;
 }

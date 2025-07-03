@@ -1,7 +1,6 @@
 let taskIdCounter = 0;
 let currentEditingTask = null;
 
-// Dra og slipp
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -32,7 +31,6 @@ function updateTaskColor(task, columnId) {
   }
 }
 
-// Legg til ny oppgave
 function addTask(button) {
   const column = button.parentElement;
   const input = column.querySelector(".new-task-input");
@@ -43,39 +41,35 @@ function addTask(button) {
   task.className = "task";
   task.id = "task-" + taskIdCounter++;
   task.draggable = true;
-
-  // Start med bare tittel, beskrivelse og tag tomme
-  task.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <strong>${title}</strong>
-      <button class="delete-btn" title="Slett oppgave" aria-label="Slett oppgave">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#c0392b" viewBox="0 0 24 24">
-          <path d="M3 6h18M9 6v12a1 1 0 0 0 2 0V6M14 6v12a1 1 0 0 0 2 0V6M19 6v12a3 3 0 0 1-6 0V6m5-3H8a2 2 0 0 0-2 2v1h12V5a2 2 0 0 0-2-2z"/>
-        </svg>
-      </button>
-    </div>`;
-
   task.addEventListener("dragstart", drag);
-  task.addEventListener("click", () => openEditPopup(task));
+  task.innerHTML = `
+  <div class="task-header">
+    <div class="left-controls">
+      <button class="edit-btn" title="Rediger">✎</button>
+      <strong>${title}</strong>
+    </div>
+    <button class="delete-btn" title="Slett">×</button>
+  </div>
+`;
 
-  const taskList = column.querySelector(".task-list");
-  taskList.appendChild(task);
+
+  task.querySelector(".edit-btn").addEventListener("click", () => openEditPopup(task));
+  task.querySelector(".delete-btn").addEventListener("click", () => task.remove());
+
+  column.querySelector(".task-list").appendChild(task);
   updateTaskColor(task, column.id);
-
-  // Legg på slett-knapp event listener
-  const deleteBtn = task.querySelector(".delete-btn");
-  deleteBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // Forhindre at popup åpnes ved sletting
-    if (confirm("Vil du slette denne oppgaven?")) {
-      task.remove();
-      if (currentEditingTask === task) closeEditPopup();
-    }
-  });
-
   input.value = "";
 }
 
-// Popup: Åpne og lukke
+document.querySelectorAll(".task-list").forEach(list => {
+  list.addEventListener("dragover", allowDrop);
+  list.addEventListener("drop", drop);
+});
+
+document.querySelectorAll(".add-task-btn").forEach(button => {
+  button.addEventListener("click", () => addTask(button));
+});
+
 function openEditPopup(task) {
   currentEditingTask = task;
   const desc = task.querySelector("p")?.textContent || "";
@@ -91,7 +85,6 @@ function closeEditPopup() {
   currentEditingTask = null;
 }
 
-// Lagre endringer
 document.getElementById("save-edit-btn").addEventListener("click", () => {
   if (!currentEditingTask) return;
 
@@ -100,31 +93,24 @@ document.getElementById("save-edit-btn").addEventListener("click", () => {
   const title = currentEditingTask.querySelector("strong")?.textContent || "";
 
   let html = `
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+  <div class="task-header">
+    <div class="left-controls">
+      <button class="edit-btn" title="Rediger">✎</button>
       <strong>${title}</strong>
-      <button class="delete-btn" title="Slett oppgave" aria-label="Slett oppgave">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#c0392b" viewBox="0 0 24 24">
-          <path d="M3 6h18M9 6v12a1 1 0 0 0 2 0V6M14 6v12a1 1 0 0 0 2 0V6M19 6v12a3 3 0 0 1-6 0V6m5-3H8a2 2 0 0 0-2 2v1h12V5a2 2 0 0 0-2-2z"/>
-        </svg>
-      </button>
-    </div>`;
+    </div>
+    <button class="delete-btn" title="Slett">×</button>
+  </div>
+`;
 
-  if (desc) html += `<p>${desc}</p>`;
-  if (tag) html += `<span class="tag">${tag}</span>`;
+if (desc) html += `<p>${desc}</p>`;
+if (tag) html += `<span class="tag">${tag}</span>`;
+
 
   currentEditingTask.innerHTML = html;
-
   currentEditingTask.addEventListener("dragstart", drag);
-  currentEditingTask.addEventListener("click", () => openEditPopup(currentEditingTask));
 
-  const deleteBtn = currentEditingTask.querySelector(".delete-btn");
-  deleteBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (confirm("Vil du slette denne oppgaven?")) {
-      currentEditingTask.remove();
-      closeEditPopup();
-    }
-  });
+  currentEditingTask.querySelector(".edit-btn").addEventListener("click", () => openEditPopup(currentEditingTask));
+  currentEditingTask.querySelector(".delete-btn").addEventListener("click", () => currentEditingTask.remove());
 
   closeEditPopup();
 });
